@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>美食地圖 - Zero & Jack 泰國之旅</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Noto+Serif+TC:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .food-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; margin-bottom: 40px; }
+    .food-card { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 4px 15px rgba(13,69,69,0.1); display: flex; flex-direction: column; gap: 10px; }
+    .food-name { font-family: 'Cinzel', serif; font-size: 1rem; color: #0D4545; font-weight: 600; }
+    .food-meta { font-size: 0.85rem; color: #666; display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+    .food-rating { color: #C9A84C; font-weight: bold; }
+    .food-price { color: #1A6B6B; }
+    .food-type { background: #F5EDD6; padding: 2px 8px; border-radius: 20px; font-size: 0.8rem; color: #0D4545; display: inline-block; }
+    .food-dishes { font-size: 0.85rem; color: #444; border-top: 1px solid #F0E8D0; padding-top: 8px; }
+    .food-dishes strong { color: #0D4545; display: block; margin-bottom: 4px; }
+    .food-dishes ul { margin: 0; padding-left: 16px; }
+    .food-dishes li { margin-bottom: 3px; }
+    .map-btn { display: inline-flex; align-items: center; gap: 6px; background: #1A6B6B; color: white; padding: 8px 14px; border-radius: 8px; font-size: 0.85rem; text-decoration: none; margin-top: auto; transition: background 0.2s; }
+    .map-btn:hover { background: #0D4545; }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-container">
+    <div class="nav-logo">Zero & Jack</div>
+    <ul class="nav-menu">
+      <li><a href="../index.html" class="nav-link">首頁</a></li>
+      <li><a href="itinerary.html" class="nav-link">行程表</a></li>
+      <li><a href="hotels.html" class="nav-link">住宿</a></li>
+      <li><a href="attractions.html" class="nav-link">景點</a></li>
+      <li><a href="transport.html" class="nav-link">交通</a></li>
+      <li><a href="money-exchange.html" class="nav-link">換錢</a></li>
+      <li><a href="food.html" class="nav-link active">美食</a></li>
+      <li><a href="souvenirs.html" class="nav-link">伴手禮</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-header">
+  <h1>🍜 美食地圖</h1>
+  <p>Zero & Jack 精選餐廳 · 點擊導航直達</p>
+</div>
+
+<main class="container">
+
+  <!-- 蘇梅島 -->
+  <h2 class="sec-title">🏝️ 蘇梅島 (Day 4-6)</h2>
+  <div class="food-grid">
+
+    <div class="food-card">
+      <div class="food-name">Kapi Sator Central Samui</div>
+      <div class="food-meta">
+        <span class="food-rating">⭐ 4.9 (1,692)</span>
+        <span class="food-price">฿400-1,200</span>
+      </div>
+      <span class="food-type">南泰料理 · 米其林必比登</span>
+      <div class="food-dishes">
+        <strong>🍽️ 推薦菜色</strong>
+        <ul>
+          <li>蝦醬炒蝦 (Kapi Sator with Shrimp) — 招牌</li>
+          <li>南部黃咖哩石斑魚</li>
+          <li>香蕉煎餅 + 椰子冰淇淋</li>
+        </ul>
+      </div>
+      <a href="https://www.google.com/maps/search/Kapi+Sator+Central+Samui" target="_blank" class="map-btn">🗺️ Google Maps 導航</a>
+    </div>
+
+    <div class="food-card">
+      <div class="food-name">The Club by Zazen</div>
+      <div class="food-meta">
+        <span class="food-rating">⭐ 4.8 (368)</span>
+        <span class="food-price">฿400-1,600</span>
+      </div>
+      <span class="food-type">泰式 · 海景餐廳</span>
+      <div class="food-dishes">
+        <strong>🍽️ 推薦菜色</strong>
+        <ul>
+          <li>大海鱸魚配鳳梨炒飯 — 招牌</li>
+          <li>泰式綠咖哩</li>
+          <li>Zazen 特製芝士漢堡</li>
+        </ul>
+      </div>
+      <a href="https://www.google.com/maps/search/The+Club+by+Zazen+Koh+Samui" target="_blank" class="map-btn">🗺️ Google Maps 導航</a>
+    </div>
+
+    <div class="food-card">
+      <div class="food-name">THE COCOON - SAMUI VIEWPOINT</div>
+      <div class="food-meta">
+        <span class="food-rating">⭐ 4.7 (9,632)</span>
+        <span class="food-price">฿400-1,600</span>
+      </div>
+      <span class="food-type">景觀餐廳 · 泰西融合</span>
+      <div class="food-dishes">
+        <strong>🍽️ 推薦菜色</strong>
+        <ul>
+          <li>松露薯條 (Truffled Fries) — 招牌</li>
+          <li>海鮮蒜香義大利麵</li>
+          <li>招牌調酒 + 日落夕陽美景</li>
+        </ul>
+      </div>
+      <a href="https://www.google.com/maps/search/THE+COCOON+SAMUI+VIEWPOINT" target="_blank" class="map-btn">🗺️ Google Maps 導航</a>
+    </div>
+
+    <div class="food-card">
+      <div class="food-name">Sabienglae, Bang Rak Beach</div>
+      <div class="food-meta">
+        <span class="food-rating">⭐ 4.7 (847)</span>
+        <span class="food-price">฿400-1,000</span>
+      </div>
+      <span class="food-type">海鮮 · 海景</span>
+      <div class="food-dishes">
+        <strong>🍽️ 推薦菜色</strong>
+        <ul>
+          <li>黃咖哩炒蟹 — 招牌</li>
+          <li>椰奶小章魚 (Baby Octopus)</li>
+          <li>Yam Sabienglae 酸辣海鮮沙拉</li>
+        </ul>
+      </div>
+      <a href="https://www.google.com/maps/search/Sabienglae+Bang+Rak+Beach+Samui" target="_blank" class="map-btn">🗺️ Google Maps 導航</a>
+    </div>
+
+    <div class="food-card">
+      <div class="food-name">The Best Samui Bar and Restaurant</div>
+      <div class="food-meta">
+        <span class="food-rating">⭐ 4.7 (723)</span>
+        <span class="food-price">฿200-1,200</span>
+      </div>
+      <span class="food-type">泰式 · 海鮮 · 酒吧</span>
+      <div class="food-dishes">
+        <strong>🍽️ 推薦菜色</strong>
+        <ul>
+          <li>烤新鮮海魚</li>
+          <li>冬蔭功湯 (Tom Yum)</li>
+          <li>泰式炒粿條 (Pad Thai)</li>
+        </ul>
+      </div>
+      <a href="https://www.google.com/maps/search/The+Best+Samui+Bar+and+Restaurant" target="_blank" class="map-btn">🗺️ Google Maps 導航</a>
+    </div>
+
+    <div class="food-card">
+      <div class="food-name">Coco Tam's</div>
+      <div class="food-meta">
+        <span class="food-rating">⭐ 4.4 (6,379)</span>
+        <span class="food-price">฿400-1,400</span>
+      </div>
+      <span class="food-type">泰式 · 披薩 · 火舞表演</span>
+      <div class="food-dishes">
+        <strong>🍽️ 推薦菜色</strong>
+        <ul>
+          <li>招牌松露披薩 — 必吃</li>
+          <li>泰式青木瓜沙拉</li>
+          <li>沙嗲串燒 + 調酒</li>
+        </ul>
+      </div>
+      <a href="https://www.google.com/maps/search/Coco+Tam's+Koh+Samui" target="_blank" class="map-btn">🗺️ Google Maps 導航</a>
+    </div>
+
+    <div class="food-card">
+      <div class="food-name">Fisherman's Village Night Market</div>
+      <div class="food-meta">
+        <span class="food-rating">⭐ 4.4 (5,357)</span>
+        <span class="food-price">฿100-400</span>
+      </div>
+      <span class="food-type">夜市 · 每週五</span>
+      <div class="food-dishes">
+        <strong>🍽️ 推薦菜色</strong>
+        <ul>
+          <li>烤海鮮串 · 炸物</li>
+          <li>芒果糯米飯</li>
+          <li>椰子冰淇淋</li>
+        </ul>
+      </div>
+      <a href="https://www.google.com/maps/search/Fisherman's+Village+Night+Market+Samui" target="_blank" class="map-btn">🗺️ Google Maps 導航</a>
+    </div>
+
+    <div class="food-card">
+      <div class="food-name">Coffee Cup</div>
+      <div class="food-meta">
+        <span class="food-rating">⭐ 4.7 (439)</span>
+        <span class="food-price">฿200-400</span>
+      </div>
+      <span class="food-type">早餐 · 咖啡</span>
+      <div class="food-dishes">
+        <strong>🍽️ 推薦菜色</strong>
+        <ul>
+          <li>美式早餐套餐</li>
+          <li>法式吐司 / 鬆餅</li>
+          <li>冰咖啡 · 果昔</li>
+        </ul>
+      </div>
+      <a href="https://www.google.com/maps/search/Coffee+Cup+Koh+Samui" target="_blank" class="map-btn">🗺️ Google Maps 導航</a>
+    </div>
+
+    <div class="food-card">
+      <div class="food-name">E-Saan Krok Mai</div>
+      <div class="food-meta">
+        <span class="food-rating">⭐ 4.5 (496)</span>
+        <span class="food-price">฿200-400</span>
+      </div>
+      <span class="food-type">東北泰菜 (Isaan)</span>
+      <div class="food-dishes">
+        <strong>🍽️ 推薦菜色</strong>
+        <ul>
+          <li>青木瓜沙拉 (Som Tum)</li>
+          <li>烤雞 (Gai Yang)</li>
+          <li>豬肉炭烤拼盤</li>
+        </ul>
+      </div>
+      <a href="https://www.google.com/maps/search/E-Saan+Krok+Mai+Samui" target="_blank" class="map-btn">🗺️ Google Maps 導航</a>
+    </div>
+
+    <div class="food-card">
+      <div class="food-name">Bacaba Samui บาคาบา สมุย</div>
+      <div class="food-meta">
+        <span class="food-rating">⭐ 4.3 (344)</span>
+        <span class="food-price">฿400-600</span>
+      </div>
+      <span class="food-type">泰式 · 海景</span>
+      <div class="food-dishes">
+        <strong>🍽️ 推薦菜色</strong>
+        <ul>
+          <li>新鮮海鮮燒烤</li>
+          <li>泰式炒飯</li>
+          <li>椰奶咖哩</li>
+        </ul>
+      </div>
+      <a href="https://www.google.com/maps/search/Bacaba+Samui" target="_blank" class="map-btn">🗺️ Google Maps 導航</a>
+    </div>
+
+    <div class="food-card">
+      <div class="food-name">Tha Ruea Samui Seafood Bar</div>
+      <div class="food-meta">
+        <span class="food-rating">⭐ 4.1 (446)</span>
+        <span class="food-price">฿200-400</span>
+      </div>
+      <span class="food-type">海鮮 · 懸崖景觀</span>
+      <div class="food-dishes">
+        <strong>🍽️ 推薦菜色</strong>
+        <ul>
+          <li>咖哩蛋炒蟹</li>
+          <li>烤生蠔</li>
+          <li>烘蛋 (泰式烘蛋)</li>
+        </ul>
+      </div>
+      <a href="https://www.google.com/maps/search/Tha+Ruea+Samui+Seafood+Bar" target="_blank" class="map-btn">🗺️ Google Maps 導航</a>
+    </div>
+
+  </div>
+
+  <!-- 曼谷餐廳 -->
+  <h2 class="sec-title">🌆 曼谷餐廳 (Day 7-9)</h2>
+  <div class="food-grid">
+
+    <div class="food-card">
+      <div class="food-name">Savoey @Tha Maharaj</div>
+      <div class="food-meta">
+        <span class="food-rating">⭐ 4.6 (3,701)</span>
+        <span class="food-price">฿200-1,200</span>
+      </div>
+      <span class="food-type">泰國菜 · 河景</span>
+      <div class="food-dishes">
+        <strong>🍽️ 推薦菜色</strong>
+        <ul>
+          <li>清蒸石斑魚配青檸辣椒醬 — 招牌</li>
+          <li>黃咖哩炒蟹</li>
+          <li>泰式炒粿條 (Pad Thai Sen Chan)</li>
+        </ul>
+      </div>
+      <a href="https://www.google.com/maps/search/Savoey+Tha+Maharaj+Bangkok" target="_blank" class="map-btn">🗺️ Google Maps 導航</a>
+    </div>
+
+    <div class="food-card">
+      <div class="food-name">Here Hai (Original shop)</div>
+      <div class="food-meta">
+        <span class="food-rating">⭐ 4.4 (3,797)</span>
+        <span class="food-price">฿400-1,000</span>
+      </div>
+      <span class="food-type">海鮮 · 米其林必比登</span>
+      <div class="food-dishes">
+        <strong>🍽️ 推薦菜色</strong>
+        <ul>
+          <li>招牌炒蟹肉炒飯 — 必吃</li>
+          <li>蟹肉蛋包飯</li>
+          <li>炒蝦蛄配蒜蓉胡椒</li>
+        </ul>
+      </div>
+      <a href="https://www.google.com/maps/search/Here+Hai+Original+Bangkok" target="_blank" class="map-btn">🗺️ Google Maps 導航</a>
+    </div>
+
+    <div class="food-card">
+      <div class="food-name">Rongsi Pochana Langsuan</div>
+      <div class="food-meta">
+        <span class="food-rating">⭐ 4.4 (1,795)</span>
+        <span class="food-price">฿400-1,400</span>
+      </div>
+      <span class="food-type">泰國菜</span>
+      <div class="food-dishes">
+        <strong>🍽️ 推薦菜色</strong>
+        <ul>
+          <li>泰式海鮮炒飯</li>
+          <li>冬蔭功湯</li>
+          <li>打拋豬肉飯</li>
+        </ul>
+      </div>
+      <a href="https://www.google.com/maps/search/Rongsi+Pochana+Langsuan+Bangkok" target="_blank" class="map-btn">🗺️ Google Maps 導航</a>
+    </div>
+
+    <div class="food-card">
+      <div class="food-name">Duomo</div>
+      <div class="food-meta">
+        <span class="food-rating">⭐ 4.6 (2,132)</span>
+        <span class="food-price">฿400-600</span>
+      </div>
+      <span class="food-type">義大利菜</span>
+      <div class="food-dishes">
+        <strong>🍽️ 推薦菜色</strong>
+        <ul>
+          <li>手工披薩</li>
+          <li>新鮮義大利麵</li>
+          <li>提拉米蘇</li>
+        </ul>
+      </div>
+      <a href="https://www.google.com/maps/search/Duomo+Bangkok" target="_blank" class="map-btn">🗺️ Google Maps 導航</a>
+    </div>
+
+    <div class="food-card">
+      <div class="food-name">Sala Thai Art Gallery & Restaurant</div>
+      <div class="food-meta">
+        <span class="food-rating">⭐ 4.7 (814)</span>
+        <span class="food-price">฿200-400</span>
+      </div>
+      <span class="food-type">泰國菜 · 藝術空間</span>
+      <div class="food-dishes">
+        <strong>🍽️ 推薦菜色</strong>
+        <ul>
+          <li>道地泰式咖哩</li>
+          <li>泰式炒粿條</li>
+          <li>芒果糯米飯</li>
+        </ul>
+      </div>
+      <a href="https://www.google.com/maps/search/Sala+Thai+Art+Gallery+Restaurant+Bangkok" target="_blank" class="map-btn">🗺️ Google Maps 導航</a>
+    </div>
+
+    <div class="food-card">
+      <div class="food-name">原橋下水餃</div>
+      <div class="food-meta">
+        <span class="food-rating">⭐ 3.9 (1,777)</span>
+        <span class="food-price">$1-200</span>
+      </div>
+      <span class="food-type">中式 · 餃子</span>
+      <div class="food-dishes">
+        <strong>🍽️ 推薦菜色</strong>
+        <ul>
+          <li>手工水餃 (多種口味)</li>
+          <li>鍋貼</li>
+          <li>餛飩湯</li>
+        </ul>
+      </div>
+      <a href="https://www.google.com/maps/search/原橋下水餃+Bangkok" target="_blank" class="map-btn">🗺️ Google Maps 導航</a>
+    </div>
+
+    <div class="food-card">
+      <div class="food-name">The Mustang Blu</div>
+      <div class="food-meta">
+        <span class="food-rating">⭐ 4.1 (1,125)</span>
+        <span class="food-price">฿200-400</span>
+      </div>
+      <span class="food-type">咖啡廳</span>
+      <div class="food-dishes">
+        <strong>🍽️ 推薦菜色</strong>
+        <ul>
+          <li>精品咖啡 · 拿鐵</li>
+          <li>早午餐套餐</li>
+          <li>手工蛋糕</li>
+        </ul>
+      </div>
+      <a href="https://www.google.com/maps/search/The+Mustang+Blu+Bangkok" target="_blank" class="map-btn">🗺️ Google Maps 導航</a>
+    </div>
+
+  </div>
+
+  <!-- 曼谷夜市 -->
+  <h2 class="sec-title">🌙 曼谷夜市 (Day 7-9)</h2>
+  <div class="food-grid">
+
+    <div class="food-card">
+      <div class="food-name">Jodd Fairs Ratchada</div>
+      <div class="food-meta">
+        <span class="food-rating">⭐ 4.2 (16,358)</span>
+        <span class="food-price">฿50-300</span>
+      </div>
+      <span class="food-type">夜市 · 17:00-01:00</span>
+      <div class="food-dishes">
+        <strong>🍽️ 必吃攤位</strong>
+        <ul>
+          <li>Leng Zabb 火山排骨 — 最人氣</li>
+          <li>Kung Tep 海鮮桶 (蝦、蚵、魷魚)</li>
+          <li>大章魚燒 · 新鮮果昔</li>
+        </ul>
+      </div>
+      <a href="https://www.google.com/maps/search/Jodd+Fairs+Ratchada+Bangkok" target="_blank" class="map-btn">🗺️ Google Maps 導航</a>
+    </div>
+
+    <div class="food-card">
+      <div class="food-name">Asiatique 河濱夜市</div>
+      <div class="food-meta">
+        <span class="food-rating">⭐ 4.4 (73,310)</span>
+        <span class="food-price">฿100-500</span>
+      </div>
+      <span class="food-type">夜市 · 河濱 · 17:00-24:00</span>
+      <div class="food-dishes">
+        <strong>🍽️ 推薦</strong>
+        <ul>
+          <li>河景餐廳海鮮大餐</li>
+          <li>泰式街頭小食</li>
+          <li>火舞表演 + 調酒</li>
+        </ul>
+      </div>
+      <a href="https://www.google.com/maps/search/Asiatique+The+Riverfront+Bangkok" target="_blank" class="map-btn">🗺️ Google Maps 導航</a>
+    </div>
+
+    <div class="food-card">
+      <div class="food-name">朱拉隆功夜市</div>
+      <div class="food-meta">
+        <span class="food-rating">⭐ 4.4 (240)</span>
+        <span class="food-price">฿50-200</span>
+      </div>
+      <span class="food-type">夜市 · 週五六日</span>
+      <div class="food-dishes">
+        <strong>🍽️ 推薦</strong>
+        <ul>
+          <li>泰式炸雞 · 烤肉串</li>
+          <li>芒果糯米飯 · 泰式甜點</li>
+          <li>泰式奶茶 · 新鮮椰子</li>
+        </ul>
+      </div>
+      <a href="https://www.google.com/maps/search/朱拉隆功夜市+Bangkok" target="_blank" class="map-btn">🗺️ Google Maps 導航</a>
+    </div>
+
+    <div class="food-card">
+      <div class="food-name">吞武里市場</div>
+      <div class="food-meta">
+        <span class="food-rating">⭐ 4.6 (7,818)</span>
+        <span class="food-price">฿30-200</span>
+      </div>
+      <span class="food-type">傳統街市 · 在地感</span>
+      <div class="food-dishes">
+        <strong>🍽️ 推薦</strong>
+        <ul>
+          <li>道地泰式粿條湯</li>
+          <li>炸香蕉 · 烤玉米</li>
+          <li>新鮮熱帶水果</li>
+        </ul>
+      </div>
+      <a href="https://www.google.com/maps/search/吞武里市場+Bangkok" target="_blank" class="map-btn">🗺️ Google Maps 導航</a>
+    </div>
+
+    <div class="food-card">
+      <div class="food-name">拉差達火車夜市</div>
+      <div class="food-meta">
+        <span class="food-rating">⭐ 4.4 (473)</span>
+        <span class="food-price">฿50-300</span>
+      </div>
+      <span class="food-type">夜市</span>
+      <div class="food-dishes">
+        <strong>🍽️ 推薦</strong>
+        <ul>
+          <li>各式串燒 · 炸物</li>
+          <li>泰式涼拌海鮮</li>
+          <li>現煮粿條 · 海南雞飯</li>
+        </ul>
+      </div>
+      <a href="https://www.google.com/maps/search/拉差達火車夜市+Bangkok" target="_blank" class="map-btn">🗺️ Google Maps 導航</a>
+    </div>
+
+  </div>
+
+</main>
+
+<footer class="footer">
+  <p>&copy; 2026 Zero & Jack Thailand Trip | 祝旅途愉快！🌴</p>
+</footer>
+
+<script src="../js/script.js"></script>
+</body>
+</html>
