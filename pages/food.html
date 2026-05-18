@@ -532,7 +532,6 @@ function findNearby() {
         const dist = haversine(myLat, myLng, lat, lng);
         card.dataset.dist = dist;
 
-        // Remove old badge if any
         const old = card.querySelector('.dist-badge');
         if (old) old.remove();
 
@@ -541,13 +540,7 @@ function findNearby() {
         badge.textContent = dist < 1 ? (dist * 1000).toFixed(0) + ' m' : dist.toFixed(1) + ' km';
         card.querySelector('.food-name').appendChild(document.createTextNode(' '));
         card.querySelector('.food-name').appendChild(badge);
-
-        if (dist < minDist) { minDist = dist; nearest = card; }
       });
-
-      // Highlight nearest
-      cards.forEach(c => c.classList.remove('nearest'));
-      if (nearest) nearest.classList.add('nearest');
 
       // Sort each grid by distance
       document.querySelectorAll('.food-grid').forEach(grid => {
@@ -556,10 +549,30 @@ function findNearby() {
         sorted.forEach(c => grid.appendChild(c));
       });
 
+      // Highlight top 3 across all cards
+      const allSorted = [...cards].sort((a, b) => parseFloat(a.dataset.dist) - parseFloat(b.dataset.dist));
+      cards.forEach(c => { c.classList.remove('nearest'); delete c.dataset.rank; });
+      const medals = ['🥇', '🥈', '🥉'];
+      allSorted.slice(0, 3).forEach((card, i) => {
+        card.classList.add('nearest');
+        const old = card.querySelector('.rank-badge');
+        if (old) old.remove();
+        const rb = document.createElement('span');
+        rb.className = 'rank-badge';
+        rb.textContent = medals[i];
+        card.querySelector('.food-name').prepend(rb);
+      });
+
+      const top3Names = allSorted.slice(0, 3).map((c, i) => {
+        const name = [...c.querySelector('.food-name').childNodes]
+          .filter(n => n.nodeType === 3).map(n => n.textContent.trim()).join('').trim();
+        const dist = parseFloat(c.dataset.dist);
+        return `${medals[i]} ${name} (${dist < 1 ? (dist*1000).toFixed(0)+'m' : dist.toFixed(1)+'km'})`;
+      });
+
       btn.textContent = '🔄 重新定位';
       btn.disabled = false;
-      const nearName = nearest ? nearest.querySelector('.food-name').childNodes[0].textContent.trim() : '';
-      status.textContent = `✅ 已按距離排序，最近的是「${nearName}」(${minDist.toFixed(1)} km)`;
+      status.innerHTML = '✅ 最近三間：' + top3Names.join('　');
     },
     err => {
       btn.disabled = false;

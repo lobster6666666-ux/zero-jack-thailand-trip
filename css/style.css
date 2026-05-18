@@ -736,6 +736,11 @@ body {
   color: #e53935;
 }
 
+.rank-badge {
+  margin-right: 4px;
+  font-size: 1rem;
+}
+
 /* ── Font size control ── */
 #font-ctrl {
   position: fixed;
