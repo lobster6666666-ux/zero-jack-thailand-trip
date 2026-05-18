@@ -669,3 +669,34 @@ body {
   opacity: 1;
   transform: translateY(0);
 }
+
+.edit-select {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 0.95rem;
+  color: var(--ink);
+  background: #fff;
+  border: 1px solid var(--gold);
+  border-radius: 6px;
+  padding: 2px 6px;
+  cursor: pointer;
+  outline: none;
+  vertical-align: middle;
+}
+
+.edit-select:focus {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 2px rgba(26,107,107,0.15);
+}
+
+.edit-time-select { min-width: 80px; }
+.edit-date-select { min-width: 70px; }
+
+.edit-remainder {
+  display: inline;
+  outline: none;
+}
+
+.edit-remainder:focus {
+  background: rgba(76,175,80,0.06);
+  border-radius: 3px;
+}
