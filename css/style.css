@@ -578,3 +578,94 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
+/* ─── EDIT MODE ─────────────────────────────────────────── */
+#edit-toggle-btn {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 9999;
+  background: var(--teal);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 12px 22px;
+  font-family: 'Noto Serif TC', serif;
+  font-size: 0.95rem;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(13,69,69,0.35);
+  transition: all 0.2s;
+}
+
+#edit-toggle-btn:hover {
+  background: var(--teal-d);
+  transform: translateY(-2px);
+}
+
+#edit-toggle-btn.editing {
+  background: #2e7d32;
+}
+
+#edit-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9998;
+  background: #2e7d32;
+  color: white;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  gap: 12px;
+}
+
+#edit-banner button {
+  background: rgba(255,255,255,0.2);
+  color: white;
+  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: 6px;
+  padding: 4px 12px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+#edit-banner button:hover {
+  background: rgba(255,255,255,0.3);
+}
+
+.editable-active {
+  outline: 2px dashed #4caf50 !important;
+  outline-offset: 4px;
+  border-radius: 8px;
+  cursor: text !important;
+}
+
+.editable-active:focus {
+  outline: 2px solid #2e7d32 !important;
+  background: rgba(76, 175, 80, 0.03);
+}
+
+#edit-toast {
+  position: fixed;
+  bottom: 90px;
+  right: 28px;
+  z-index: 9999;
+  background: #2e7d32;
+  color: white;
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: all 0.25s;
+  pointer-events: none;
+}
+
+#edit-toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
