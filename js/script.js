@@ -326,10 +326,41 @@ function clearPageEdits() {
   location.reload();
 }
 
+// ─── FONT SIZE ───────────────────────────────────────────────────
+const FONT_KEY = 'zerojack_fontsize';
+const FONT_STEPS = [14, 16, 18, 21, 24];
+
+function applyFontSize(size) {
+  document.documentElement.style.fontSize = size + 'px';
+  localStorage.setItem(FONT_KEY, size);
+  const label = document.getElementById('font-size-label');
+  if (label) label.textContent = size + 'px';
+}
+
+function changeFontSize(delta) {
+  const current = parseInt(localStorage.getItem(FONT_KEY) || 16);
+  const idx = FONT_STEPS.indexOf(current);
+  const next = FONT_STEPS[Math.min(Math.max(idx + delta, 0), FONT_STEPS.length - 1)];
+  applyFontSize(next);
+}
+
 // ─── INIT ────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', function() {
   assignEditIds();
   loadSavedEdits();
+
+  // Font size controls
+  const savedSize = parseInt(localStorage.getItem(FONT_KEY) || 16);
+  applyFontSize(savedSize);
+
+  const fontCtrl = document.createElement('div');
+  fontCtrl.id = 'font-ctrl';
+  fontCtrl.innerHTML = `
+    <button onclick="changeFontSize(-1)" title="縮小字體">A−</button>
+    <span id="font-size-label">${savedSize}px</span>
+    <button onclick="changeFontSize(1)" title="放大字體">A+</button>
+  `;
+  document.body.appendChild(fontCtrl);
 
   const btn = document.createElement('button');
   btn.id = 'edit-toggle-btn';
