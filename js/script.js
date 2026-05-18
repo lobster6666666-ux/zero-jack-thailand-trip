@@ -190,6 +190,61 @@ function activateSelects() {
   });
 }
 
+function addNewTimeItem(ul, card) {
+  const li = document.createElement('li');
+  li.contentEditable = 'false';
+  li.dataset.selectified = 'true';
+
+  const timeSelect = makeTimeSelect('08:00');
+  const remainderSpan = document.createElement('span');
+  remainderSpan.contentEditable = 'true';
+  remainderSpan.className = 'edit-remainder';
+  remainderSpan.textContent = ' - ';
+
+  timeSelect.addEventListener('change', () => {
+    if (card) saveEdit(card.dataset.editId, card.innerHTML);
+  });
+  remainderSpan.addEventListener('input', () => {
+    if (card) saveEdit(card.dataset.editId, card.innerHTML);
+  });
+
+  li.appendChild(timeSelect);
+  li.appendChild(remainderSpan);
+
+  // Insert before the add button
+  const addBtn = ul.querySelector('.add-item-btn');
+  ul.insertBefore(li, addBtn || null);
+
+  // Focus the text span
+  setTimeout(() => {
+    remainderSpan.focus();
+    const range = document.createRange();
+    range.selectNodeContents(remainderSpan);
+    range.collapse(false);
+    window.getSelection().removeAllRanges();
+    window.getSelection().addRange(range);
+  }, 50);
+
+  if (card) saveEdit(card.dataset.editId, card.innerHTML);
+}
+
+function activateAddButtons() {
+  document.querySelectorAll('.card').forEach(card => {
+    card.querySelectorAll('ul').forEach(ul => {
+      if (ul.querySelector('.add-item-btn')) return;
+      const btn = document.createElement('button');
+      btn.className = 'add-item-btn';
+      btn.textContent = '＋ 新增行程';
+      btn.onclick = (e) => { e.preventDefault(); addNewTimeItem(ul, card); };
+      ul.appendChild(btn);
+    });
+  });
+}
+
+function deactivateAddButtons() {
+  document.querySelectorAll('.add-item-btn').forEach(btn => btn.remove());
+}
+
 function deactivateSelects() {
   document.querySelectorAll('[data-selectified]').forEach(el => {
     // Capture current select values before restoring
@@ -218,6 +273,7 @@ function toggleEditMode() {
 
   if (editMode) {
     activateSelects();
+    activateAddButtons();
     getEditables().forEach(el => {
       el.contentEditable = 'true';
       el.classList.add('editable-active');
@@ -227,6 +283,7 @@ function toggleEditMode() {
     btn.classList.add('editing');
     banner.style.display = 'flex';
   } else {
+    deactivateAddButtons();
     deactivateSelects();
     getEditables().forEach(el => {
       el.contentEditable = 'false';
