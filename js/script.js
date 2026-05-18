@@ -143,10 +143,16 @@ function activateSelects() {
       if (card) saveEdit(card.dataset.editId, card.innerHTML);
     });
 
+    const delBtn = document.createElement('button');
+    delBtn.className = 'del-item-btn';
+    delBtn.textContent = '✕';
+    delBtn.onclick = (e) => { e.preventDefault(); li.remove(); if (card) saveEdit(card.dataset.editId, card.innerHTML); };
+
     li.contentEditable = 'false';
     li.innerHTML = '';
     li.appendChild(timeSelect);
     li.appendChild(remainderSpan);
+    li.appendChild(delBtn);
   });
 
   // Date selects: h3 headers with M/D pattern
@@ -208,8 +214,14 @@ function addNewTimeItem(ul, card) {
     if (card) saveEdit(card.dataset.editId, card.innerHTML);
   });
 
+  const delBtn = document.createElement('button');
+  delBtn.className = 'del-item-btn';
+  delBtn.textContent = '✕';
+  delBtn.onclick = (e) => { e.preventDefault(); li.remove(); if (card) saveEdit(card.dataset.editId, card.innerHTML); };
+
   li.appendChild(timeSelect);
   li.appendChild(remainderSpan);
+  li.appendChild(delBtn);
 
   // Insert before the add button
   const addBtn = ul.querySelector('.add-item-btn');

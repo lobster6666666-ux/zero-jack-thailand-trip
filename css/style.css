@@ -719,3 +719,19 @@ body {
 .add-item-btn:hover {
   background: rgba(26,107,107,0.06);
 }
+
+.del-item-btn {
+  background: none;
+  border: none;
+  color: #bbb;
+  font-size: 0.8rem;
+  cursor: pointer;
+  padding: 0 4px;
+  margin-left: 6px;
+  vertical-align: middle;
+  line-height: 1;
+}
+
+.del-item-btn:hover {
+  color: #e53935;
+}
