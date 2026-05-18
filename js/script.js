@@ -283,6 +283,8 @@ function toggleEditMode() {
   const btn = document.getElementById('edit-toggle-btn');
   const banner = document.getElementById('edit-banner');
 
+  const fontCtrl = document.getElementById('font-ctrl');
+
   if (editMode) {
     activateSelects();
     activateAddButtons();
@@ -294,6 +296,7 @@ function toggleEditMode() {
     btn.innerHTML = '✅ 完成編輯';
     btn.classList.add('editing');
     banner.style.display = 'flex';
+    if (fontCtrl) fontCtrl.style.display = 'flex';
   } else {
     deactivateAddButtons();
     deactivateSelects();
@@ -306,6 +309,7 @@ function toggleEditMode() {
     btn.innerHTML = '✏️ 編輯頁面';
     btn.classList.remove('editing');
     banner.style.display = 'none';
+    if (fontCtrl) fontCtrl.style.display = 'none';
   }
 }
 
@@ -360,6 +364,7 @@ document.addEventListener('DOMContentLoaded', function() {
     <span id="font-size-label">${savedSize}px</span>
     <button onclick="changeFontSize(1)" title="放大字體">A+</button>
   `;
+  fontCtrl.style.display = 'none';
   document.body.appendChild(fontCtrl);
 
   const btn = document.createElement('button');
