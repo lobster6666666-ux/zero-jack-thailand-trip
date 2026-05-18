@@ -86,7 +86,7 @@ function makeTimeSelect(currentTime) {
   const select = document.createElement('select');
   select.className = 'edit-select edit-time-select';
   for (let h = 0; h < 24; h++) {
-    for (let m of [0, 30]) {
+    for (let m of [0, 10, 20, 30, 40, 50]) {
       const time = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`;
       const opt = document.createElement('option');
       opt.value = time;
