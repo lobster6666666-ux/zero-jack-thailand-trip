@@ -240,9 +240,13 @@ function toggleEditMode() {
   }
 }
 
+let _activateDebounce = null;
+
 function onEditInput(e) {
   const id = e.currentTarget.dataset.editId;
   if (id) saveEdit(id, e.currentTarget.innerHTML);
+  clearTimeout(_activateDebounce);
+  _activateDebounce = setTimeout(activateSelects, 600);
 }
 
 function clearPageEdits() {
