@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="../css/style.css">
   <style>
     .food-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; margin-bottom: 40px; }
-    .food-card { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 4px 15px rgba(13,69,69,0.1); display: flex; flex-direction: column; gap: 10px; }
+    .food-card { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 4px 15px rgba(13,69,69,0.1); display: flex; flex-direction: column; gap: 10px; transition: transform 0.2s; }
     .food-name { font-family: 'Cinzel', serif; font-size: 1rem; color: #0D4545; font-weight: 600; }
     .food-meta { font-size: 0.85rem; color: #666; display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
     .food-rating { color: #C9A84C; font-weight: bold; }
@@ -20,6 +20,32 @@
     .food-dishes li { margin-bottom: 3px; }
     .map-btn { display: inline-flex; align-items: center; gap: 6px; background: #1A6B6B; color: white; padding: 8px 14px; border-radius: 8px; font-size: 0.85rem; text-decoration: none; margin-top: auto; transition: background 0.2s; }
     .map-btn:hover { background: #0D4545; }
+
+    /* Nearby feature */
+    #nearby-bar {
+      display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+      background: #F5EDD6; border-radius: 12px; padding: 14px 20px; margin-bottom: 32px;
+    }
+    #nearby-btn {
+      background: #1A6B6B; color: white; border: none; border-radius: 8px;
+      padding: 10px 20px; font-size: 0.95rem; cursor: pointer;
+      font-family: 'Noto Serif TC', serif; display: flex; align-items: center; gap: 6px;
+    }
+    #nearby-btn:hover { background: #0D4545; }
+    #nearby-btn:disabled { background: #aaa; cursor: default; }
+    #nearby-status { font-size: 0.85rem; color: #666; }
+    #sort-bar { display: none; margin-bottom: 12px; }
+    #sort-toggle {
+      background: none; border: 1px solid #1A6B6B; color: #1A6B6B;
+      border-radius: 6px; padding: 4px 12px; font-size: 0.85rem; cursor: pointer;
+      font-family: 'Noto Serif TC', serif;
+    }
+    #sort-toggle:hover { background: #1A6B6B; color: white; }
+    .dist-badge {
+      display: inline-block; background: #1A6B6B; color: white;
+      font-size: 0.75rem; padding: 2px 8px; border-radius: 20px; font-weight: bold;
+    }
+    .food-card.nearest { outline: 2px solid #C9A84C; }
   </style>
 </head>
 <body>
@@ -47,11 +73,16 @@
 
 <main class="container">
 
+  <div id="nearby-bar">
+    <button id="nearby-btn" onclick="findNearby()">📍 找最近的餐廳</button>
+    <span id="nearby-status">開啟定位後，自動顯示每間餐廳離你多遠</span>
+  </div>
+
   <!-- 蘇梅島 -->
   <h2 class="sec-title">🏝️ 蘇梅島 (Day 4-6)</h2>
-  <div class="food-grid">
+  <div class="food-grid" id="grid-samui">
 
-    <div class="food-card">
+    <div class="food-card" data-lat="9.5317" data-lng="100.0628">
       <div class="food-name">Kapi Sator Central Samui</div>
       <div class="food-meta">
         <span class="food-rating">⭐ 4.9 (1,692)</span>
@@ -69,7 +100,7 @@
       <a href="https://www.google.com/maps/search/Kapi+Sator+Central+Samui" target="_blank" class="map-btn">🗺️ Google Maps 導航</a>
     </div>
 
-    <div class="food-card">
+    <div class="food-card" data-lat="9.5598" data-lng="100.0188">
       <div class="food-name">The Club by Zazen</div>
       <div class="food-meta">
         <span class="food-rating">⭐ 4.8 (368)</span>
@@ -87,7 +118,7 @@
       <a href="https://www.google.com/maps/search/The+Club+by+Zazen+Koh+Samui" target="_blank" class="map-btn">🗺️ Google Maps 導航</a>
     </div>
 
-    <div class="food-card">
+    <div class="food-card" data-lat="9.5053" data-lng="100.0497">
       <div class="food-name">THE COCOON - SAMUI VIEWPOINT</div>
       <div class="food-meta">
         <span class="food-rating">⭐ 4.7 (9,632)</span>
@@ -105,7 +136,7 @@
       <a href="https://www.google.com/maps/search/THE+COCOON+SAMUI+VIEWPOINT" target="_blank" class="map-btn">🗺️ Google Maps 導航</a>
     </div>
 
-    <div class="food-card">
+    <div class="food-card" data-lat="9.5614" data-lng="100.0239">
       <div class="food-name">Sabienglae, Bang Rak Beach</div>
       <div class="food-meta">
         <span class="food-rating">⭐ 4.7 (847)</span>
@@ -123,7 +154,7 @@
       <a href="https://www.google.com/maps/search/Sabienglae+Bang+Rak+Beach+Samui" target="_blank" class="map-btn">🗺️ Google Maps 導航</a>
     </div>
 
-    <div class="food-card">
+    <div class="food-card" data-lat="9.4619" data-lng="100.0614">
       <div class="food-name">The Best Samui Bar and Restaurant</div>
       <div class="food-meta">
         <span class="food-rating">⭐ 4.7 (723)</span>
@@ -141,7 +172,7 @@
       <a href="https://www.google.com/maps/search/The+Best+Samui+Bar+and+Restaurant" target="_blank" class="map-btn">🗺️ Google Maps 導航</a>
     </div>
 
-    <div class="food-card">
+    <div class="food-card" data-lat="9.5551" data-lng="100.0083">
       <div class="food-name">Coco Tam's</div>
       <div class="food-meta">
         <span class="food-rating">⭐ 4.4 (6,379)</span>
@@ -159,7 +190,7 @@
       <a href="https://www.google.com/maps/search/Coco+Tam's+Koh+Samui" target="_blank" class="map-btn">🗺️ Google Maps 導航</a>
     </div>
 
-    <div class="food-card">
+    <div class="food-card" data-lat="9.5531" data-lng="100.0061">
       <div class="food-name">Fisherman's Village Night Market</div>
       <div class="food-meta">
         <span class="food-rating">⭐ 4.4 (5,357)</span>
@@ -177,7 +208,7 @@
       <a href="https://www.google.com/maps/search/Fisherman's+Village+Night+Market+Samui" target="_blank" class="map-btn">🗺️ Google Maps 導航</a>
     </div>
 
-    <div class="food-card">
+    <div class="food-card" data-lat="9.5302" data-lng="100.0591">
       <div class="food-name">Coffee Cup</div>
       <div class="food-meta">
         <span class="food-rating">⭐ 4.7 (439)</span>
@@ -195,7 +226,7 @@
       <a href="https://www.google.com/maps/search/Coffee+Cup+Koh+Samui" target="_blank" class="map-btn">🗺️ Google Maps 導航</a>
     </div>
 
-    <div class="food-card">
+    <div class="food-card" data-lat="9.5266" data-lng="100.0562">
       <div class="food-name">E-Saan Krok Mai</div>
       <div class="food-meta">
         <span class="food-rating">⭐ 4.5 (496)</span>
@@ -213,7 +244,7 @@
       <a href="https://www.google.com/maps/search/E-Saan+Krok+Mai+Samui" target="_blank" class="map-btn">🗺️ Google Maps 導航</a>
     </div>
 
-    <div class="food-card">
+    <div class="food-card" data-lat="9.5570" data-lng="100.0150">
       <div class="food-name">Bacaba Samui บาคาบา สมุย</div>
       <div class="food-meta">
         <span class="food-rating">⭐ 4.3 (344)</span>
@@ -231,7 +262,7 @@
       <a href="https://www.google.com/maps/search/Bacaba+Samui" target="_blank" class="map-btn">🗺️ Google Maps 導航</a>
     </div>
 
-    <div class="food-card">
+    <div class="food-card" data-lat="9.5109" data-lng="100.0602">
       <div class="food-name">Tha Ruea Samui Seafood Bar</div>
       <div class="food-meta">
         <span class="food-rating">⭐ 4.1 (446)</span>
@@ -253,9 +284,9 @@
 
   <!-- 曼谷餐廳 -->
   <h2 class="sec-title">🌆 曼谷餐廳 (Day 7-9)</h2>
-  <div class="food-grid">
+  <div class="food-grid" id="grid-bangkok">
 
-    <div class="food-card">
+    <div class="food-card" data-lat="13.7522" data-lng="100.4893">
       <div class="food-name">Savoey @Tha Maharaj</div>
       <div class="food-meta">
         <span class="food-rating">⭐ 4.6 (3,701)</span>
@@ -273,7 +304,7 @@
       <a href="https://www.google.com/maps/search/Savoey+Tha+Maharaj+Bangkok" target="_blank" class="map-btn">🗺️ Google Maps 導航</a>
     </div>
 
-    <div class="food-card">
+    <div class="food-card" data-lat="13.7222" data-lng="100.5852">
       <div class="food-name">Here Hai (Original shop)</div>
       <div class="food-meta">
         <span class="food-rating">⭐ 4.4 (3,797)</span>
@@ -291,7 +322,7 @@
       <a href="https://www.google.com/maps/search/Here+Hai+Original+Bangkok" target="_blank" class="map-btn">🗺️ Google Maps 導航</a>
     </div>
 
-    <div class="food-card">
+    <div class="food-card" data-lat="13.7417" data-lng="100.5489">
       <div class="food-name">Rongsi Pochana Langsuan</div>
       <div class="food-meta">
         <span class="food-rating">⭐ 4.4 (1,795)</span>
@@ -309,7 +340,7 @@
       <a href="https://www.google.com/maps/search/Rongsi+Pochana+Langsuan+Bangkok" target="_blank" class="map-btn">🗺️ Google Maps 導航</a>
     </div>
 
-    <div class="food-card">
+    <div class="food-card" data-lat="13.7231" data-lng="100.5249">
       <div class="food-name">Duomo</div>
       <div class="food-meta">
         <span class="food-rating">⭐ 4.6 (2,132)</span>
@@ -327,7 +358,7 @@
       <a href="https://www.google.com/maps/search/Duomo+Bangkok" target="_blank" class="map-btn">🗺️ Google Maps 導航</a>
     </div>
 
-    <div class="food-card">
+    <div class="food-card" data-lat="13.7463" data-lng="100.5128">
       <div class="food-name">Sala Thai Art Gallery & Restaurant</div>
       <div class="food-meta">
         <span class="food-rating">⭐ 4.7 (814)</span>
@@ -345,7 +376,7 @@
       <a href="https://www.google.com/maps/search/Sala+Thai+Art+Gallery+Restaurant+Bangkok" target="_blank" class="map-btn">🗺️ Google Maps 導航</a>
     </div>
 
-    <div class="food-card">
+    <div class="food-card" data-lat="13.7350" data-lng="100.5120">
       <div class="food-name">原橋下水餃</div>
       <div class="food-meta">
         <span class="food-rating">⭐ 3.9 (1,777)</span>
@@ -363,7 +394,7 @@
       <a href="https://www.google.com/maps/search/原橋下水餃+Bangkok" target="_blank" class="map-btn">🗺️ Google Maps 導航</a>
     </div>
 
-    <div class="food-card">
+    <div class="food-card" data-lat="13.7573" data-lng="100.5142">
       <div class="food-name">The Mustang Blu</div>
       <div class="food-meta">
         <span class="food-rating">⭐ 4.1 (1,125)</span>
@@ -385,9 +416,9 @@
 
   <!-- 曼谷夜市 -->
   <h2 class="sec-title">🌙 曼谷夜市 (Day 7-9)</h2>
-  <div class="food-grid">
+  <div class="food-grid" id="grid-nightmarket">
 
-    <div class="food-card">
+    <div class="food-card" data-lat="13.7558" data-lng="100.5441">
       <div class="food-name">Jodd Fairs Ratchada</div>
       <div class="food-meta">
         <span class="food-rating">⭐ 4.2 (16,358)</span>
@@ -405,7 +436,7 @@
       <a href="https://www.google.com/maps/search/Jodd+Fairs+Ratchada+Bangkok" target="_blank" class="map-btn">🗺️ Google Maps 導航</a>
     </div>
 
-    <div class="food-card">
+    <div class="food-card" data-lat="13.7046" data-lng="100.5029">
       <div class="food-name">Asiatique 河濱夜市</div>
       <div class="food-meta">
         <span class="food-rating">⭐ 4.4 (73,310)</span>
@@ -423,7 +454,7 @@
       <a href="https://www.google.com/maps/search/Asiatique+The+Riverfront+Bangkok" target="_blank" class="map-btn">🗺️ Google Maps 導航</a>
     </div>
 
-    <div class="food-card">
+    <div class="food-card" data-lat="13.7370" data-lng="100.5291">
       <div class="food-name">朱拉隆功夜市</div>
       <div class="food-meta">
         <span class="food-rating">⭐ 4.4 (240)</span>
@@ -441,7 +472,7 @@
       <a href="https://www.google.com/maps/search/朱拉隆功夜市+Bangkok" target="_blank" class="map-btn">🗺️ Google Maps 導航</a>
     </div>
 
-    <div class="food-card">
+    <div class="food-card" data-lat="13.7265" data-lng="100.4858">
       <div class="food-name">吞武里市場</div>
       <div class="food-meta">
         <span class="food-rating">⭐ 4.6 (7,818)</span>
@@ -459,7 +490,7 @@
       <a href="https://www.google.com/maps/search/吞武里市場+Bangkok" target="_blank" class="map-btn">🗺️ Google Maps 導航</a>
     </div>
 
-    <div class="food-card">
+    <div class="food-card" data-lat="13.7746" data-lng="100.5744">
       <div class="food-name">拉差達火車夜市</div>
       <div class="food-meta">
         <span class="food-rating">⭐ 4.4 (473)</span>
@@ -486,5 +517,75 @@
 </footer>
 
 <script src="../js/script.js"></script>
+<script>
+function haversine(lat1, lng1, lat2, lng2) {
+  const R = 6371;
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLng = (lng2 - lng1) * Math.PI / 180;
+  const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180) * Math.cos(lat2*Math.PI/180) * Math.sin(dLng/2)**2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+}
+
+function findNearby() {
+  const btn = document.getElementById('nearby-btn');
+  const status = document.getElementById('nearby-status');
+  if (!navigator.geolocation) {
+    status.textContent = '此瀏覽器不支援定位功能';
+    return;
+  }
+  btn.disabled = true;
+  btn.textContent = '⏳ 定位中...';
+  status.textContent = '請允許瀏覽器存取你的位置';
+
+  navigator.geolocation.getCurrentPosition(
+    pos => {
+      const { latitude: myLat, longitude: myLng } = pos.coords;
+      const cards = document.querySelectorAll('.food-card[data-lat]');
+      let minDist = Infinity, nearest = null;
+
+      cards.forEach(card => {
+        const lat = parseFloat(card.dataset.lat);
+        const lng = parseFloat(card.dataset.lng);
+        const dist = haversine(myLat, myLng, lat, lng);
+        card.dataset.dist = dist;
+
+        // Remove old badge if any
+        const old = card.querySelector('.dist-badge');
+        if (old) old.remove();
+
+        const badge = document.createElement('span');
+        badge.className = 'dist-badge';
+        badge.textContent = dist < 1 ? (dist * 1000).toFixed(0) + ' m' : dist.toFixed(1) + ' km';
+        card.querySelector('.food-name').appendChild(document.createTextNode(' '));
+        card.querySelector('.food-name').appendChild(badge);
+
+        if (dist < minDist) { minDist = dist; nearest = card; }
+      });
+
+      // Highlight nearest
+      cards.forEach(c => c.classList.remove('nearest'));
+      if (nearest) nearest.classList.add('nearest');
+
+      // Sort each grid by distance
+      document.querySelectorAll('.food-grid').forEach(grid => {
+        const sorted = [...grid.querySelectorAll('.food-card[data-dist]')]
+          .sort((a, b) => parseFloat(a.dataset.dist) - parseFloat(b.dataset.dist));
+        sorted.forEach(c => grid.appendChild(c));
+      });
+
+      btn.textContent = '🔄 重新定位';
+      btn.disabled = false;
+      const nearName = nearest ? nearest.querySelector('.food-name').childNodes[0].textContent.trim() : '';
+      status.textContent = `✅ 已按距離排序，最近的是「${nearName}」(${minDist.toFixed(1)} km)`;
+    },
+    err => {
+      btn.disabled = false;
+      btn.textContent = '📍 找最近的餐廳';
+      status.textContent = '無法取得位置，請確認已允許定位權限';
+    },
+    { enableHighAccuracy: true, timeout: 10000 }
+  );
+}
+</script>
 </body>
 </html>
