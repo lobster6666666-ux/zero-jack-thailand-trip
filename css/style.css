@@ -741,9 +741,10 @@ body {
   font-size: 1rem;
 }
 
-li.transport {
-  color: #e53935;
-  font-weight: 500;
+.card li.transport,
+.card ul li.transport {
+  color: #e53935 !important;
+  font-weight: 600;
 }
 
 /* ── Font size control ── */
