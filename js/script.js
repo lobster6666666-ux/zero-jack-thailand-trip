@@ -42,6 +42,7 @@ document.head.appendChild(revealStyle);
 let editMode = false;
 const STORAGE_KEY = 'zerojack_edits';
 const TIME_REGEX = /^(\d{1,2}:\d{2})/;
+const TIME_RANGE_REGEX = /^(\d{1,2}:\d{2})\s*[-~]\s*(\d{1,2}:\d{2})(.*)/;
 const DATE_REGEX = /(\d{1,2}\/\d{1,2})/;
 
 function getPageKey() {
@@ -116,42 +117,64 @@ function makeDateSelect(currentDate) {
 }
 
 function activateSelects() {
-  // Time selects: li items starting with HH:MM
+  // Time selects: li items starting with HH:MM or HH:MM - HH:MM
   document.querySelectorAll('.card li').forEach(li => {
     if (li.dataset.selectified) return;
     const text = li.textContent.trim();
-    const match = text.match(TIME_REGEX);
-    if (!match) return;
+    if (!text.match(TIME_REGEX)) return;
 
     li.dataset.selectified = 'true';
-    li.dataset.originalHtml = li.innerHTML;
-
-    const timeStr = match[1];
-    const remainder = text.slice(match[0].length); // " - 起床" etc
-
-    const timeSelect = makeTimeSelect(timeStr);
-    const remainderSpan = document.createElement('span');
-    remainderSpan.contentEditable = 'true';
-    remainderSpan.className = 'edit-remainder';
-    remainderSpan.textContent = remainder;
-
     const card = li.closest('.card');
-    timeSelect.addEventListener('change', () => {
-      if (card) saveEdit(card.dataset.editId, card.innerHTML);
-    });
-    remainderSpan.addEventListener('input', () => {
-      if (card) saveEdit(card.dataset.editId, card.innerHTML);
-    });
+
+    const rangeMatch = text.match(TIME_RANGE_REGEX);
+    li.contentEditable = 'false';
+    li.innerHTML = '';
+
+    if (rangeMatch) {
+      // Two time selects: startTime - endTime remainder
+      const startSelect = makeTimeSelect(rangeMatch[1]);
+      const sep = document.createElement('span');
+      sep.textContent = ' - ';
+      const endSelect = makeTimeSelect(rangeMatch[2]);
+      const remainderSpan = document.createElement('span');
+      remainderSpan.contentEditable = 'true';
+      remainderSpan.className = 'edit-remainder';
+      remainderSpan.textContent = rangeMatch[3];
+
+      [startSelect, endSelect].forEach(s => s.addEventListener('change', () => {
+        if (card) saveEdit(card.dataset.editId, card.innerHTML);
+      }));
+      remainderSpan.addEventListener('input', () => {
+        if (card) saveEdit(card.dataset.editId, card.innerHTML);
+      });
+
+      li.appendChild(startSelect);
+      li.appendChild(sep);
+      li.appendChild(endSelect);
+      li.appendChild(remainderSpan);
+    } else {
+      // Single time select
+      const timeSelect = makeTimeSelect(text.match(TIME_REGEX)[1]);
+      const remainderSpan = document.createElement('span');
+      remainderSpan.contentEditable = 'true';
+      remainderSpan.className = 'edit-remainder';
+      remainderSpan.textContent = text.slice(text.match(TIME_REGEX)[0].length);
+
+      timeSelect.addEventListener('change', () => {
+        if (card) saveEdit(card.dataset.editId, card.innerHTML);
+      });
+      remainderSpan.addEventListener('input', () => {
+        if (card) saveEdit(card.dataset.editId, card.innerHTML);
+      });
+
+      li.appendChild(timeSelect);
+      li.appendChild(remainderSpan);
+    }
 
     const delBtn = document.createElement('button');
     delBtn.className = 'del-item-btn';
     delBtn.textContent = '✕';
     delBtn.onclick = (e) => { e.preventDefault(); li.remove(); if (card) saveEdit(card.dataset.editId, card.innerHTML); };
-
-    li.contentEditable = 'false';
-    li.innerHTML = '';
-    li.appendChild(timeSelect);
-    li.appendChild(remainderSpan);
     li.appendChild(delBtn);
   });
 
@@ -201,15 +224,18 @@ function addNewTimeItem(ul, card) {
   li.contentEditable = 'false';
   li.dataset.selectified = 'true';
 
-  const timeSelect = makeTimeSelect('08:00');
+  const startSelect = makeTimeSelect('08:00');
+  const sep = document.createElement('span');
+  sep.textContent = ' - ';
+  const endSelect = makeTimeSelect('09:00');
   const remainderSpan = document.createElement('span');
   remainderSpan.contentEditable = 'true';
   remainderSpan.className = 'edit-remainder';
-  remainderSpan.textContent = ' - ';
+  remainderSpan.textContent = ' ';
 
-  timeSelect.addEventListener('change', () => {
+  [startSelect, endSelect].forEach(s => s.addEventListener('change', () => {
     if (card) saveEdit(card.dataset.editId, card.innerHTML);
-  });
+  }));
   remainderSpan.addEventListener('input', () => {
     if (card) saveEdit(card.dataset.editId, card.innerHTML);
   });
@@ -219,7 +245,9 @@ function addNewTimeItem(ul, card) {
   delBtn.textContent = '✕';
   delBtn.onclick = (e) => { e.preventDefault(); li.remove(); if (card) saveEdit(card.dataset.editId, card.innerHTML); };
 
-  li.appendChild(timeSelect);
+  li.appendChild(startSelect);
+  li.appendChild(sep);
+  li.appendChild(endSelect);
   li.appendChild(remainderSpan);
   li.appendChild(delBtn);
 
@@ -259,14 +287,16 @@ function deactivateAddButtons() {
 
 function deactivateSelects() {
   document.querySelectorAll('[data-selectified]').forEach(el => {
-    // Capture current select values before restoring
-    const timeSelect = el.querySelector('.edit-time-select');
+    const timeSelects = el.querySelectorAll('.edit-time-select');
     const dateSelect = el.querySelector('.edit-date-select');
     const remainder = el.querySelector('.edit-remainder');
 
-    if (timeSelect) {
+    if (timeSelects.length === 2) {
       const remainText = remainder ? remainder.textContent : '';
-      el.textContent = timeSelect.value + remainText;
+      el.textContent = timeSelects[0].value + ' - ' + timeSelects[1].value + remainText;
+    } else if (timeSelects.length === 1) {
+      const remainText = remainder ? remainder.textContent : '';
+      el.textContent = timeSelects[0].value + remainText;
     } else if (dateSelect) {
       const before = el.querySelectorAll('.edit-remainder')[0];
       const after = el.querySelectorAll('.edit-remainder')[1];
