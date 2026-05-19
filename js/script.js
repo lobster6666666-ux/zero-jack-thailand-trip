@@ -59,11 +59,34 @@ function assignEditIds() {
   });
 }
 
+function cleanEditElements(el) {
+  el.querySelectorAll('[data-selectified]').forEach(item => {
+    const timeSelects = item.querySelectorAll('.edit-time-select');
+    const dateSelect = item.querySelector('.edit-date-select');
+    const remainder = item.querySelector('.edit-remainder');
+    if (timeSelects.length === 2) {
+      const remainText = remainder ? remainder.textContent : '';
+      item.textContent = timeSelects[0].value + ' - ' + timeSelects[1].value + remainText;
+    } else if (timeSelects.length === 1) {
+      const remainText = remainder ? remainder.textContent : '';
+      item.textContent = timeSelects[0].value + remainText;
+    } else if (dateSelect) {
+      const spans = item.querySelectorAll('.edit-remainder');
+      item.textContent = (spans[0] ? spans[0].textContent : '') + dateSelect.value + (spans[1] ? spans[1].textContent : '');
+    }
+    delete item.dataset.selectified;
+  });
+  el.querySelectorAll('.add-item-btn, .del-item-btn').forEach(b => b.remove());
+}
+
 function loadSavedEdits() {
   const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
   getEditables().forEach(el => {
     const id = el.dataset.editId;
-    if (id && saved[id] !== undefined) el.innerHTML = saved[id];
+    if (id && saved[id] !== undefined) {
+      el.innerHTML = saved[id];
+      cleanEditElements(el);
+    }
   });
 }
 
@@ -86,15 +109,23 @@ function showSaveToast() {
 function makeTimeSelect(currentTime) {
   const select = document.createElement('select');
   select.className = 'edit-select edit-time-select';
+  let found = false;
   for (let h = 0; h < 24; h++) {
     for (let m of [0, 10, 20, 30, 40, 50]) {
       const time = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`;
       const opt = document.createElement('option');
       opt.value = time;
       opt.textContent = time;
-      if (time === currentTime) opt.selected = true;
+      if (time === currentTime) { opt.selected = true; found = true; }
       select.appendChild(opt);
     }
+  }
+  if (!found && currentTime) {
+    const opt = document.createElement('option');
+    opt.value = currentTime;
+    opt.textContent = currentTime;
+    opt.selected = true;
+    select.insertBefore(opt, select.firstChild);
   }
   return select;
 }
